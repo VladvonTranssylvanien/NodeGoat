@@ -14,15 +14,16 @@ jobs:
       - uses: actions/checkout@v4
       
       - name: Run Trivy (console output)
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@0.29.0
         with:
           scan-type: 'fs'
+          scan-ref: '.' 
           format: 'table'
           severity: 'HIGH,CRITICAL'
           exit-code: '0'
       
       - name: Run Trivy (sarif)
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@0.29.0
         with:
           scan-type: 'fs'
           format: 'sarif'
@@ -31,7 +32,7 @@ jobs:
           output: 'trivy-results.sarif'
       
       - name: Upload to GitHub Security
-        uses: github/codeql-action/upload-sarif@v4
+        uses: github/codeql-action/upload-sarif@v3
         if: always()
         with:
           sarif_file: 'trivy-results.sarif'
